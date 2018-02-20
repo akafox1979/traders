@@ -2,19 +2,12 @@
 
 include get_parent_theme_file_path( '/traders/vendor/autoload.php' );
 
+global $api;
 $api = new \Binance\API("5EfGtW6SJflYpuiMeCR5QNCMteC2MquEOPD22Yqt89l59wL9fW1xA3GjgCvv9gqi","pf7HKOC40Cpj7c6dFX0vxq7V8tl3f7L3C9AVvbud3GPuPcqm5OtCsBjfFhi38hTh");
 
-register_activation_hook(__FILE__, 'aggregator_activation');
-
-function aggregator_activation() {
-	if (! wp_next_scheduled ( 'aggregator_event' )) {
-		wp_schedule_event(time(), 'daily', 'aggregator_event');
-	}
-}
-
-add_action('aggregator_event', 'aggregator_wss');
 
 function aggregator_wss() {
+	global $api;
 	$exchangeInfo = $api->exchangeInfo();
 	if(is_array($exchangeInfo)) {
 
@@ -46,6 +39,9 @@ function aggregator_wss() {
 		} );
 	}
 }
+
+add_action( 'aggregator_event', 'aggregator_wss', 10, 0 );
+
 
 //apitraders
 //GpQrz333s8UfGShn
