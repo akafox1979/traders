@@ -28,7 +28,7 @@ define('DB_PASSWORD', 'GpQrz333s8UfGShn');
 
 
 /** MySQL hostname */
-define('DB_HOST', 'localhost:3306');
+define('DB_HOST', 'localhost');
 
 
 /** Database Charset to use in creating database tables. */
