@@ -14,6 +14,7 @@ function aggregator_wss() {
 		$symbols = array();
 		foreach ($exchangeInfo["symbols"] as $index=>$symbol){
 			array_push($symbols, $symbol["symbol"]);
+			break;
 		}
 
 		$api->chart( $symbols, "1m", function ( $api, $symbol, $chart ) {
