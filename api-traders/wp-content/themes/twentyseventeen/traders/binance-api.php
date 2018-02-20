@@ -500,14 +500,14 @@ class API {
                     $symbol = $json->s;
                     $interval = $chart->i;
                     $this->chartHandler($symbol, $interval, $json);
-                    //$this->info[$symbol]['chartCallback'.$interval]($this, $symbol, $this->charts[$symbol][$interval]);
+	                //$this->info[$symbol]['chartCallback'.$interval]($this, $symbol, $this->charts[$symbol][$interval]);
                     call_user_func($callback, $this, $symbol, $this->charts[$symbol][$interval]);
                 });
                 $ws->on('close', function($code = null, $reason = null) {
-                    echo "chart({$symbol},{$interval}) WebSocket Connection closed! ({$code} - {$reason})".PHP_EOL;
+	                error_log("chart(".$symbol.",".$interval.") WebSocket Connection closed! ({$code} - {$reason})\n");
                 });
             }, function($e) use($loop) {
-                echo "chart({$symbol},{$interval})) Could not connect: {$e->getMessage()}".PHP_EOL;
+	            error_log("chart(".$symbol.",".$interval.") Could not connect: ".$e->getMessage()."\n");
                 $loop->stop();
             });
             $this->candlesticks($symbol, $interval);
@@ -543,10 +543,10 @@ class API {
                     call_user_func($callback, $this, $symbol, $trades);
                 });
                 $ws->on('close', function($code = null, $reason = null) {
-                    echo "trades({$symbol}) WebSocket Connection closed! ({$code} - {$reason})".PHP_EOL;
+	                error_log( "trades({$symbol}) WebSocket Connection closed! ({$code} - {$reason})\n");
                 });
             }, function($e) use($loop) {
-                echo "trades({$symbol}) Could not connect: {$e->getMessage()}".PHP_EOL;
+	            error_log("trades({$symbol}) Could not connect: {$e->getMessage()}\n");
                 $loop->stop();
             });
         }
